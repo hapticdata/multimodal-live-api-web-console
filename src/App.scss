@@ -168,4 +168,15 @@ body {
   max-width: 90%;
   border-radius: 32px;
   max-height: fit-content;
+
+  &.float {
+    position: absolute;
+    bottom: 34px;
+    right: 20px;
+    z-index: 10000;
+  }
+
+  &.minimal {
+    max-width: 320px;
+  }
 }

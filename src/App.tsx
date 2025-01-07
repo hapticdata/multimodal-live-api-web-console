@@ -46,16 +46,24 @@ function App() {
             <div className="main-app-area">
               {/* APP goes here */}
               <Altair />
-              <video
-                className={cn("stream", {
-                  hidden: !videoRef.current || !videoStream,
-                })}
-                ref={videoRef}
-                autoPlay
-                playsInline
+              <div
+                style={{
+                  backgroundColor: "salmon",
+                  width: "800px",
+                  height: "800px",
+                }}
               />
             </div>
 
+            <video
+              style={{ background: "black" }}
+              className={cn("stream float minimal", {
+                hidden: false, //!videoRef.current || !videoStream,
+              })}
+              ref={videoRef}
+              autoPlay
+              playsInline
+            />
             <ControlTray
               videoRef={videoRef}
               supportsVideo={true}
