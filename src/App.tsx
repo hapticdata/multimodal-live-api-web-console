@@ -21,6 +21,8 @@ import SidePanel from "./components/side-panel/SidePanel";
 import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
 import cn from "classnames";
+import Sidekick from "./components/avatar/Sidekick";
+import AvatarsApp from "./components/avatar/AvatarsApp";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -45,14 +47,7 @@ function App() {
           <main>
             <div className="main-app-area">
               {/* APP goes here */}
-              <Altair />
-              <div
-                style={{
-                  backgroundColor: "salmon",
-                  width: "800px",
-                  height: "800px",
-                }}
-              />
+              <AvatarsApp />
             </div>
 
             <video

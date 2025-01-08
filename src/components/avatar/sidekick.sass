@@ -1,0 +1,286 @@
+$black: #111
+$white: #fff
+$grey900: #202124
+$grey800: #3c4043
+$grey700: #5f6368
+$grey600: #80868b
+$grey500: #9aa0a6
+$grey400: #bdc1c6
+$grey300: #dadce0
+$grey200: #e8eaed
+$grey100: #f1f3f4
+$grey50: #f8f9fa
+$red500: #ea4335
+$blue500: #4285f4
+
+$baseFont: 'Google Sans Display', sans-serif
+$monoFont: 'Google Sans Mono', monospace
+
+$roomChangeSpeed: .59s
+$agentHeadSize: 320px
+// $agentHeadSize: 100px
+
+.agentList
+  display: flex
+  align-items: center
+  z-index: 99
+  // gap: 40px
+  width: 100vw
+  view-transition-class: agentList
+  height: $agentHeadSize
+
+:root::view-transition-new(.agentList)
+  animation: swipeIn $roomChangeSpeed
+
+:root::view-transition-old(.agentList)
+  animation: swipeOut $roomChangeSpeed
+
+.agent
+  display: flex
+  align-items: center
+  flex-direction: column
+  gap: 10px
+  transition: all 2s
+  position: fixed
+  left: 50vw
+  top: 50vh
+  view-transition-class: agent
+
+  &.sleeping, .agentIsSpeaking &
+    filter: brightness(0.4)
+    scale: .7
+
+  &.speaking
+    filter: brightness(1)
+    scale: 2
+    z-index: 100
+
+    .agentName
+      scale: .5
+
+    .agentVideo
+      scale: .5
+
+    &.noScaleUp
+      scale: 1
+
+      .agentName
+        scale: 1
+
+  &.onImage
+    scale: .6
+
+    .agentName
+      scale: 1.67
+
+    &.speaking
+      scale: 1.5
+
+      .agentName
+        scale: 0.67
+
+  &:hover
+    .agentEditButton
+      opacity: 1
+
+.agentThought
+  font-size: 30px
+  position: absolute
+  translate: 0 -130%
+  pointer-events: none
+  opacity: 0
+  transition: opacity .333s
+  animation: pulse 1s infinite alternate
+
+  &.active
+    opacity: 1
+
+.agentVideo, .agentImage
+  position: absolute
+  user-select: none
+  top: 0
+  left: 50%
+  box-shadow: 0 0 10px rgba($black, .5)
+  translate: -50% -110%
+  border-radius: 10px
+  overflow: hidden
+  transform-origin: 50% 100%
+  transition: all 2s
+
+// .videoPlayer
+//   display: flex
+//   align-items: center
+//   justify-content: center
+//   position: relative
+
+//   iframe
+//     pointer-events: none
+
+.agentVideo
+  background: $black
+  width: 600px
+
+  > iframe
+    width: 100%
+    pointer-events: none
+    transition: opacity .3s
+
+  &:hover, &.isPaused
+    iframe
+      opacity: .1
+
+    button
+      opacity: 1
+
+  button
+    position: absolute
+    font-size: 70px
+    opacity: 0
+    transition: opacity .3s
+
+.agentImage
+  width: 250px
+  aspect-ratio: 1
+
+  button, img
+    width: 100%
+
+.agentMediaClose
+  width: unset !important
+  position: absolute
+  top: 0
+  right: 0
+  font-size: 30px
+  margin: 5px
+
+.agentHead
+  width: $agentHeadSize
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  aspect-ratio: 1
+  border-radius: 100%
+  padding: 22px
+  transition: all .3s
+  position: relative
+
+  &:hover
+    scale: 1.1
+
+    .mouth div
+      scale: 1 1.5
+
+.body
+  position: absolute
+  inset: 0
+  aspect-ratio: 1
+  background: #9393ec
+  transition: all 3s ease-in-out
+  border-radius: 100%
+  z-index: -9
+  animation: wobbleX 3s infinite alternate
+  transition: background-color 1s
+
+.face
+  width: $agentHeadSize * 0.2
+
+.eyes
+  display: flex
+  justify-content: space-between
+
+  div
+    aspect-ratio: 1
+    width: 33%
+    transform-origin: 50% 50%
+    background: rgba($black, 1)
+    border-radius: 100%
+
+    &.blink
+      animation: blink .3s
+
+  &.sleeping
+    div
+      scale: 1 .11 !important
+      rotate: 10deg
+
+      &:first-child
+        rotate: -10deg
+
+.mouth
+  display: flex
+  justify-content: center
+  margin-top: 4px
+  transition: scale 1ms
+
+  img
+    width: 100%
+
+.agentName
+  position: absolute
+  width: fit-content
+  font-size: 17px
+  bottom: 0
+  translate: 0 120%
+  $outlineColor: rgba(0, 0, 0, 0.33)
+  text-shadow: -1px -1px 0 $outlineColor, 1px -1px 0 $outlineColor, -1px 1px 0 $outlineColor, 1px 1px 0 $outlineColor, 0 0 8px $outlineColor
+  transition: all 2s
+  transform-origin: 50% 0
+  display: flex
+  flex-direction: column
+  align-items: center
+  text-align: center
+  gap: 4px
+  user-select: none
+
+.agentEditButton
+  opacity: 0
+  transition: opacity .2s
+
+  .icon
+    font-size: 20px
+    color: $grey600
+
+  &:hover
+    .icon
+      color: $white
+
+@keyframes blink
+  0%
+    scale: 1 1
+
+  50%
+    scale: 1 .1
+
+  100%
+    scale: 1 1
+
+@keyframes wobbleX
+  from
+    scale: 1 1
+    rotate: 0
+
+  to
+    scale: 1 .96
+    rotate: 359deg
+
+@keyframes swipeIn
+  from
+    translate: 100vw 0
+
+  to
+    translate: 0 0
+
+@keyframes swipeOut
+  from
+    translate: 0 0
+
+  to
+    translate: -100vw 0
+
+@keyframes pulse
+  from
+    scale: 1 1
+
+  to
+    scale: 1.2 1.2
