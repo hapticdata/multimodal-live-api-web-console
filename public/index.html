@@ -1,26 +1,24 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
-      rel="stylesheet"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#000000" />
+	<meta name="description" content="Web site created using create-react-app" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+		rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/molleindustria/p5.play/lib/p5.play.js"></script>
+	<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+	<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -29,21 +27,96 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Multimodal Live - Console</title>
-  </head>
+	<title>Multimodal Live - Console</title>
+</head>
 
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root"></div>
+	<script>
+		let mySketch;
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+		let selectedCircleIndex = -1;
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+		window.get_circles = function () {
+			return {circles: window.circles};
+		};
+
+		window.change_circle = function (args) {
+			const color = args.color;
+			const findIndex = window.circles.findIndex(
+				(c) => c.color.toLowerCase() === color.toLowerCase(),
+			);
+			console.log(window.circles.splice);
+			window.circles.splice(findIndex, 1, args);
+		};
+
+		window.set_circles = function (args) {
+			window.circles = args.circles;
+		};
+
+		window.circles = [
+			{color: "red", x: 350, y: 400, radius: 50},
+			{color: "green", x: 400, y: 400, radius: 50},
+			{color: "blue", x: 450, y: 400, radius: 50},
+		];
+
+		window.initSketch = function (container) {
+			console.log("initialize sketch in public/index.html");
+
+			console.log(container);
+			if (mySketch) {
+				return;
+			}
+			mySketch = new p5((p) => {
+				p.setup = function () {
+					console.log(p);
+					p.createCanvas(800, 800);
+					container.innerHTMl = "";
+					container.appendChild(p._renderer.canvas);
+				};
+
+				function getSelectedCircleIndex() {
+					for (let i = 0; i < circles.length; i++) {
+						const circle = circles[i];
+						if (
+							p.mouseX > circle.x - circle.radius &&
+							p.mouseX < circle.x + circle.radius &&
+							p.mouseY > circle.y - circle.radius &&
+							p.mouseY < circle.y + circle.radius
+						) {
+							return i;
+						}
+					}
+					return -1;
+				}
+
+				p.mousePressed = function () {
+					selectedCircleIndex = getSelectedCircleIndex();
+				};
+
+				p.mouseDragged = function () {
+					if (selectedCircleIndex > -1) {
+						const circle = circles[selectedCircleIndex];
+						circle.x = p.mouseX;
+						circle.y = p.mouseY;
+					}
+				};
+
+				p.mouseReleased = function () {
+					selectedCircleIndex = -1;
+				};
+
+				p.draw = function draw() {
+					p.background(220);
+					for (const circle of circles) {
+						p.fill(circle.color);
+						p.circle(circle.x, circle.y, circle.radius);
+					}
+				};
+			});
+		};
+	</script>
+</body>
+
 </html>

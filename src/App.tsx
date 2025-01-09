@@ -18,7 +18,7 @@ import { useRef, useState } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import SidePanel from "./components/side-panel/SidePanel";
-import { Altair } from "./components/altair/Altair";
+import { P5Sketch } from "./components/p5/P5Sketch";
 import ControlTray from "./components/control-tray/ControlTray";
 import cn from "classnames";
 
@@ -45,14 +45,7 @@ function App() {
           <main>
             <div className="main-app-area">
               {/* APP goes here */}
-              <Altair />
-              <div
-                style={{
-                  backgroundColor: "salmon",
-                  width: "800px",
-                  height: "800px",
-                }}
-              />
+              <P5Sketch />
             </div>
 
             <video

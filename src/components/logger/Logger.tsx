@@ -116,6 +116,9 @@ const RenderPart = ({ part }: { part: Part }) =>
   ) : (
     <div className="part part-inlinedata">
       <h5>Inline Data: {part.inlineData?.mimeType}</h5>
+      <SyntaxHighlighter language="plaintext" style={dark}>
+        {part.inlineData?.data || ""}
+      </SyntaxHighlighter>
     </div>
   );
 
