@@ -143,7 +143,7 @@ export default function Agent({ volume, isThinking, isActive }: AgentProps) {
         </div>
       </div>
       <p className="agentName">
-        {"kansas"}
+        {"The Rock"}
         <button
           className="agentEditButton"
           onClick={(e) => {
