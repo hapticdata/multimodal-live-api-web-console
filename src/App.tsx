@@ -51,7 +51,7 @@ function App() {
             <video
               style={{ background: "black" }}
               className={cn("stream float minimal", {
-                hidden: false, //!videoRef.current || !videoStream,
+                hidden: !videoRef.current || !videoStream,
               })}
               ref={videoRef}
               autoPlay
