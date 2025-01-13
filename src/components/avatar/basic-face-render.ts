@@ -11,7 +11,7 @@ export function renderBasicFace(props: BasicFaceProps) {
   ctx.clearRect(0, 0, width, height);
 
   ctx.strokeStyle = "white";
-  ctx.strokeRect(0, 0, width, height);
+  // ctx.strokeRect(0, 0, width, height);
 
   const eyesCenter = [width / 2, height / 3];
   const eyesOffset = width / 6;
@@ -21,7 +21,7 @@ export function renderBasicFace(props: BasicFaceProps) {
     [eyesCenter[0] + eyesOffset, eyesCenter[1]],
   ];
 
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "black";
   eye(ctx, eyesPosition[0], eyeRadius, eyesOpenness + 0.1);
   eye(ctx, eyesPosition[1], eyeRadius, eyesOpenness + 0.1);
 
@@ -29,8 +29,8 @@ export function renderBasicFace(props: BasicFaceProps) {
   const mouthExtent = [width / 4, (height / 5) * mouthOpenness + 10];
   ctx.save();
   ctx.translate(mouthCenter[0], mouthCenter[1]);
-  ctx.scale(1, mouthOpenness + 0.3 * 1.2);
-  ctx.fillStyle = "white";
+  ctx.scale(1, mouthOpenness + 0.6 * 1.4);
+  ctx.fillStyle = "black";
   ctx.beginPath();
   ctx.ellipse(0, 0, mouthExtent[0], mouthExtent[1], 0, 0, Math.PI * 2);
   ctx.fill();
