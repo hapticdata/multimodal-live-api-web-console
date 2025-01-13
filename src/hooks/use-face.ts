@@ -31,6 +31,21 @@ function easeOutQuint(x: number): number {
   return 1 - Math.pow(1 - x, 5);
 }
 
+// Clamp function
+function clamp(x: number, lowerlimit: number, upperlimit: number) {
+  if (x < lowerlimit) x = lowerlimit;
+  if (x > upperlimit) x = upperlimit;
+  return x;
+}
+
+// Smoothstep function (GLSL's smoothstep equivalent)
+function smoothstep(edge0: number, edge1: number, x: number) {
+  // Scale, bias and saturate x to 0..1 range
+  x = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+  // Evaluate polynomial
+  return x * x * (3 - 2 * x);
+}
+
 type BlinkProps = {
   speed: number;
 };
@@ -50,9 +65,11 @@ export function useBlink({ speed }: BlinkProps) {
     function nextFrame() {
       frameId.current = window.requestAnimationFrame(() => {
         setFrame(frame + 1);
-        const s = Math.min(1, easeOutQuint((Math.sin(frame * speed) + 1) * 2));
+        let s = easeOutQuint((Math.sin(frame * speed) + 1) * 2);
+        s = smoothstep(0.1, 0.25, s);
+        s = Math.min(1, s);
+        //s = s * (cycle > 0.8 ? 1 : 0);
         setEyeScale(s);
-        console.log("scale", s);
         nextFrame();
       });
     }

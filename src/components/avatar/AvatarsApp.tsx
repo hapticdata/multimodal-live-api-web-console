@@ -4,6 +4,7 @@ import Sidekick from "./Sidekick";
 import { renderBasicFace } from "./basic-face-render";
 import BasicFace from "./BasicFace";
 import ThreeScene from "./ThreeScene";
+import ThreeFiber from "./ThreeFiber";
 
 export default function AvatarsApp() {
   const { client, volume, setConfig } = useLiveAPIContext();
@@ -21,6 +22,7 @@ export default function AvatarsApp() {
           },
         ],
       },
+      tools: [{ googleSearch: {} }],
     });
   }, [setConfig]);
 
@@ -30,7 +32,8 @@ export default function AvatarsApp() {
     <div className="avatars-app">
       <BasicFace canvasRef={faceCanvasRef} />
       {/*<Sidekick volume={volume} isThinking={false} isActive={true} />*/}
-      <ThreeScene faceCanvasRef={faceCanvasRef} />
+      {/*<ThreeScene faceCanvasRef={faceCanvasRef} />*/}
+      <ThreeFiber faceCanvasRef={faceCanvasRef} />
     </div>
   );
 }

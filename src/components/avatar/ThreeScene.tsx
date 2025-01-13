@@ -2,6 +2,7 @@ import { RefObject, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import useWander from "../../hooks/use-wander";
 
 let gltf: GLTF | null = null;
 const loader = new GLTFLoader().setPath("/");
@@ -93,6 +94,7 @@ export default function ThreeScene({ faceCanvasRef }: ThreeSceneProps) {
       room.receiveShadow = true;
 
       scene.add(room);
+      const group = new THREE.Group();
 
       // const skyColor = 0x5555cc;
       // const groundColor = 0x444444;
@@ -102,14 +104,13 @@ export default function ThreeScene({ faceCanvasRef }: ThreeSceneProps) {
       //   0.5,
       // );
       // scene.add(hemisphereLight);
-      loader.load("Cheese_001-lowpoly.gltf", async function(_gltf) {
+      loader.load("Cheese_001-lowpoly.gltf", async function (_gltf) {
         if (gltf) {
           scene.remove(gltf.scene);
         }
         gltf = _gltf;
         console.log(gltf.scene);
         await renderer?.compileAsync(gltf.scene, camera, scene);
-        const group = new THREE.Group();
         group.add(gltf.scene);
         const castShadowRecurse = (c: THREE.Object3D) => {
           c.castShadow = true;

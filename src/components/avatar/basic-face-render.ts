@@ -15,7 +15,7 @@ export function renderBasicFace(props: BasicFaceProps) {
 
   const eyesCenter = [width / 2, height / 3];
   const eyesOffset = width / 6;
-  const eyeRadius = width / 10;
+  const eyeRadius = width / 14;
   const eyesPosition: Array<[number, number]> = [
     [eyesCenter[0] - eyesOffset, eyesCenter[1]],
     [eyesCenter[0] + eyesOffset, eyesCenter[1]],
@@ -25,14 +25,15 @@ export function renderBasicFace(props: BasicFaceProps) {
   eye(ctx, eyesPosition[0], eyeRadius, eyesOpenness + 0.1);
   eye(ctx, eyesPosition[1], eyeRadius, eyesOpenness + 0.1);
 
-  const mouthCenter = [width / 2, (height / 3) * 2];
-  const mouthExtent = [width / 4, (height / 5) * mouthOpenness + 10];
+  const mouthCenter = [width / 2, (height / 3) * 1.75];
+  const mouthExtent = [width / 10, (height / 5) * mouthOpenness + 20];
   ctx.save();
   ctx.translate(mouthCenter[0], mouthCenter[1]);
   ctx.scale(1, mouthOpenness + 0.6 * 1.4);
   ctx.fillStyle = "black";
   ctx.beginPath();
-  ctx.ellipse(0, 0, mouthExtent[0], mouthExtent[1], 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, mouthExtent[0], mouthExtent[1], 0, 0, Math.PI, false);
+  ctx.ellipse(0, 0, mouthExtent[0], mouthExtent[1] * 0.25, 0, 0, Math.PI, true);
   ctx.fill();
   ctx.restore();
 
