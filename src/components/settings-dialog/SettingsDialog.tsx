@@ -9,6 +9,7 @@ import {
 import "./settings-dialog.scss";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 import { LiveConfig } from "../../multimodal-live-types";
+import { Select } from "@react-three/drei";
 
 export default function SettingsDialog() {
   const [open, setOpen] = useState(false);

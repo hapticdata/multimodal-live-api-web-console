@@ -1,0 +1,12 @@
+.character-select {
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  width: 200px;
+
+  &.react-select__menu {
+    background: pink;
+    color: var(--Neutral-90);
+  }
+}

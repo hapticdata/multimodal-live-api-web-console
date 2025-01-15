@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
-import Sidekick from "./Sidekick";
-import { renderBasicFace } from "./basic-face-render";
+import "./avatars-app.scss";
 import BasicFace from "./BasicFace";
-import ThreeScene from "./ThreeScene";
 import ThreeFiber from "./ThreeFiber";
 
 export default function AvatarsApp() {
@@ -13,7 +11,7 @@ export default function AvatarsApp() {
     setConfig({
       model: "models/gemini-2.0-flash-exp",
       generationConfig: {
-        responseModalities: "audio",
+        responseModalities: "text",
       },
       systemInstruction: {
         parts: [
