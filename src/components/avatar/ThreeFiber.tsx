@@ -150,7 +150,13 @@ export default function ThreeFiber({ faceCanvasRef }: ThreeSceneProps) {
 
   useEffect(() => {
     if (selectedOption?.label) {
-      const text = systemInstruction[selectedOption.label];
+      let text = systemInstruction[selectedOption.label];
+      const currentSystemInstruction =
+        config.systemInstruction?.parts[0].text || text;
+      const systemInstructionHasBeenEdited = !Object.entries(
+        systemInstruction,
+      ).find(([key, value]) => currentSystemInstruction === value);
+      text = systemInstructionHasBeenEdited ? currentSystemInstruction : text;
       setConfig({
         ...config,
         systemInstruction: {
@@ -158,7 +164,7 @@ export default function ThreeFiber({ faceCanvasRef }: ThreeSceneProps) {
         },
       });
     }
-  }, [config, setConfig, selectedOption]);
+  }, [config, setConfig, selectedOption, Character]);
 
   return (
     <div>
@@ -188,6 +194,16 @@ export default function ThreeFiber({ faceCanvasRef }: ThreeSceneProps) {
         options={filterOptions}
         onChange={(e) => {
           setSelectedOption(e);
+
+          if (e) {
+            const text = systemInstruction[e?.label];
+            setConfig({
+              ...config,
+              systemInstruction: {
+                parts: [{ text }],
+              },
+            });
+          }
         }}
       />
       <Canvas
