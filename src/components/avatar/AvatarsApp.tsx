@@ -11,7 +11,7 @@ export default function AvatarsApp() {
     setConfig({
       model: "models/gemini-2.0-flash-exp",
       generationConfig: {
-        responseModalities: "text",
+        responseModalities: "audio",
       },
       systemInstruction: {
         parts: [
